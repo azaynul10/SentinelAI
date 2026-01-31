@@ -1,0 +1,12 @@
+Flask
+flask-cors
+opencv-python
+numpy
+mediapipe==0.10.20
+torch
+torchaudio
+transformers
+librosa
+soundfile
+moviepy>=1.0.3
+msvc-runtime

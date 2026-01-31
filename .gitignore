@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# JavaScript / Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.next/
+dist/
+build/
+out/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Project Specific (Media & Results)
+results/
+checkpoints/  # Models/states might be large, but if needed for init, maybe keep? user said 'checkpoints' has models. 
+# excluding replay videos
+*.mp4
+*.avi
+*.mov
+# excluding saved snapshots
+*.jpg
+*.png
+
+# VS Code
+.vscode/

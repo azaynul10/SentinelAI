@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "C:\Users\Abedi\OneDrive - g.bracu.ac.bd\fds\app.py", line 13, in <module>
+    from audio_inference import AudioFallDetector
+  File "C:\Users\Abedi\OneDrive - g.bracu.ac.bd\fds\audio_inference.py", line 2, in <module>
+    import torch
+  File "C:\Users\Abedi\OneDrive - g.bracu.ac.bd\fds\venv\lib\site-packages\torch\__init__.py", line 2161, in <module>
+    from torch import _VF as _VF, functional as functional  # usort: skip
+  File "C:\Users\Abedi\OneDrive - g.bracu.ac.bd\fds\venv\lib\site-packages\torch\functional.py", line 8, in <module>
+    import torch.nn.functional as F
+  File "C:\Users\Abedi\OneDrive - g.bracu.ac.bd\fds\venv\lib\site-packages\torch\nn\__init__.py", line 8, in <module>
+    from torch.nn.modules import *  # usort: skip # noqa: F403
+  File "C:\Users\Abedi\OneDrive - g.bracu.ac.bd\fds\venv\lib\site-packages\torch\nn\modules\__init__.py", line 35, in <module>
+    from .batchnorm import (
+  File "C:\Users\Abedi\OneDrive - g.bracu.ac.bd\fds\venv\lib\site-packages\torch\nn\modules\batchnorm.py", line 9, in <module>
+    from ._functions import SyncBatchNorm as sync_batch_norm
+  File "C:\Users\Abedi\OneDrive - g.bracu.ac.bd\fds\venv\lib\site-packages\torch\nn\modules\_functions.py", line 4, in <module>
+    from torch.autograd.function import Function
+  File "C:\Users\Abedi\OneDrive - g.bracu.ac.bd\fds\venv\lib\site-packages\torch\autograd\__init__.py", line 16, in <module>
+    from torch import _vmap_internals
+  File "C:\Users\Abedi\OneDrive - g.bracu.ac.bd\fds\venv\lib\site-packages\torch\_vmap_internals.py", line 8, in <module>
+    from torch.utils._pytree import _broadcast_to_and_flatten, tree_flatten, tree_unflatten
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 879, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 975, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_data
+KeyboardInterrupt
