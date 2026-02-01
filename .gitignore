@@ -20,10 +20,8 @@ out/
 .DS_Store
 Thumbs.db
 
-# Project Specific (Media & Results)
 results/
-checkpoints/  # Models/states might be large, but if needed for init, maybe keep? user said 'checkpoints' has models. 
-# excluding replay videos
+checkpoints/
 *.mp4
 *.avi
 *.mov
