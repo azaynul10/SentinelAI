@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel AI Architecture</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #f0f0f0; }
+        .mermaid { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { margin-bottom: 20px; color: #333; }
+    </style>
+</head>
+<body>
+    <h1>Sentinel AI - Logic Flow</h1>
+    <div class="mermaid">
+flowchart TD
+    %% Styling
+    classDef hardware fill:#f9f,stroke:#333,stroke-width:2px
+    classDef ml fill:#bbf,stroke:#333,stroke-width:2px,color:black
+    classDef logic fill:#bfb,stroke:#333,stroke-width:2px,color:black
+    classDef ui fill:#fbb,stroke:#333,stroke-width:2px,color:black
+
+    %% Subgraph: Hardware Inputs
+    subgraph EdgeDevice ["Local Edge Hardware (CPU)"]
+        Cam([📷 Camera Feed]) -->|Frame Buffer| VD[Video Decoupler]
+        Mic([🎙️ Microphone]) -->|Audio Buffer| AD[Audio Decoupler]
+    end
+
+    %% Subgraph: Vision Pipeline
+    subgraph Vision ["Vision Pipeline (200ms)"]
+        VD --> MP[MediaPipe Pose Physics]
+        MP -->|33 Landmarks| FE[Feature Engineering]
+        FE -->|Angles, Velocity, AR| XGB[🧠 XGBoost Model]
+        XGB -->|Prob 94.4%| VP(Video Probability)
+    end
+
+    %% Subgraph: Audio Pipeline
+    subgraph Audio ["Audio Pipeline (Async)"]
+        AD --> AST_FE[Spectrogram Extraction]
+        AST_FE -->|1024x128| AST[🧠 Audio Spectrogram Transformer]
+        AST -->|Prob 99.0%| AP(Audio Probability)
+    end
+
+    %% Subgraph: Fusion Engine
+    subgraph Core ["Fusion & State Machine"]
+        VP & AP --> SVE{Soft Voting Ensemble}
+        SVE -->|Combined Score| SM[Biomechanical State Latcher]
+        
+        %% State Machine Logic
+        SM -->|Hysteresis| S_St(State: STANDING)
+        SM -->|Hysteresis| S_Si(State: SITTING)
+        SM -->|Impact + Stillness| S_Fa(State: FALLEN 🚨)
+    end
+
+    %% Subgraph: User Interface
+    subgraph Frontend ["Next.js 14 Dashboard"]
+        S_Fa -->|WebSocket| API[Flask API]
+        API -->|Real-time JSON| RQ[React Query]
+        RQ -->|Update| UI_Main[Dark Bento Grid]
+        RQ -->|Alert| UI_Alert[Red Status Pill]
+    end
+
+    %% Key Accuracies
+    class Cam,Mic hardware;
+    class XGB,AST ml;
+    class SVE,SM logic;
+    class UI_Main,UI_Alert ui;
+    </div>
+</body>
+</html>
