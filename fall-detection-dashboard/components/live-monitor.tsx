@@ -9,11 +9,19 @@ import { TimelineScrubber } from "@/components/timeline-scrubber"
 import { EventLog } from "@/components/event-log"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Upload, Video, Camera } from "lucide-react"
+import { Upload, Video, Camera, Volume2 } from "lucide-react"
 
 export function LiveMonitor() {
     const { webcamRef, videoRef, data, isConnected, sourceMode, setSourceMode } = useLiveDetection()
     const [videoSrc, setVideoSrc] = useState<string | null>(null)
+
+    const handleTestAudio = async () => {
+        try {
+            await fetch('http://127.0.0.1:5000/test_audio', { method: 'POST' })
+        } catch (e) {
+            console.error("Audio test failed:", e)
+        }
+    }
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
@@ -106,6 +114,13 @@ export function LiveMonitor() {
                             onChange={handleFileUpload}
                         />
                     </div>
+                    <Button
+                        variant="outline"
+                        onClick={handleTestAudio}
+                        className="gap-2 bg-indigo-950/30 border-indigo-500/30 text-indigo-400 hover:bg-indigo-900/50 hover:text-white ml-2 text-xs"
+                    >
+                        <Volume2 className="w-3 h-3" /> Test Voice
+                    </Button>
                 </div>
             </header>
 

@@ -93,7 +93,7 @@ def detect_fall():
                 'fall_detected': fallen,
                 'state': state,
                 'detection_method': method,
-                'confidence_score': score,
+                'confidence_score': float(score),
                 'annotated_frame': f'data:image/jpeg;base64,{annotated_frame_base64}',
                 'paused': pose_detector.paused
             })
@@ -158,6 +158,18 @@ def job_status(job_id):
     if not status:
         return jsonify({'error': 'Job not found'}), 404
     return jsonify(status)
+
+@app.route('/test_audio', methods=['POST'])
+def test_audio():
+    """Trigger the ElevenLabs audio alert for testing"""
+    try:
+        # Access the protected method directly for testing
+        if hasattr(pose_detector, '_play_alert'):
+            pose_detector._play_alert()
+            return jsonify({'status': 'played'})
+        return jsonify({'error': 'Audio alert not configured'}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 

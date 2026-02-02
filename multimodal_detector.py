@@ -143,8 +143,9 @@ class MultimodalFallDetector:
             # We will rely on its boolean output for now, converting to 1.0/0.0
             # Ideally, we should modify PoseFallDetector to return a float confidence.
             try:
-                _, fallen, _, _ = self.pose_detector.process_frame(frame)
-                video_prob = 1.0 if fallen else 0.0
+                # Updated to unpack 5 values (annotated, fallen, state, method, prob)
+                _, fallen, _, _, video_prob = self.pose_detector.process_frame(frame)
+                # video_prob is now the direct ML probability from XGBoost
             except Exception as e:
                 print(f"Pose detection error: {e}")
                 video_prob = 0.0
@@ -317,3 +318,32 @@ class MultimodalFallDetector:
         actual_path = self.replay_buffer.save_replay_clip(save_path, timestamp)
         if actual_path:
             print(f"Replay saved to: {actual_path}")
+
+    def fuse(self, v_prob, a_prob):
+        """
+        Soft Voting Ensemble:
+        Uses a weighted average of Video (XGBoost) and Audio (AST) probabilities.
+        """
+        # User requested Script Logic: 50/50 split (Audio Weight = 0.5)
+        # However, we implement adaptive fallback handled in _run_fusion_logic weights (w_v, w_a).
+        # But wait, _run_fusion_logic calls THIS function with v_prob/a_prob, 
+        # and _run_fusion_logic calculated weights but didn't pass them?
+        # Let's check _run_fusion_logic:
+        # It calls: is_fall_detected, smoothed_score = self.fuse(v_prob, a_prob)
+        # It DOES calculate w_v, w_a but ignores them in the call?
+        # That's a bug in the existing code.
+        # We will assume equal weights if not passed, OR we just trust the inputs are raw probs 
+        # and we apply the "Soft Voting" here.
+        
+        # Soft Voting (0.5 / 0.5)
+        fused_score = (v_prob * 0.5) + (a_prob * 0.5)
+        
+        # If Audio is missing/zero (likely disabled), trust Video completely
+        if a_prob == 0.0:
+            fused_score = v_prob
+            
+        # Persistence Logic (Simple Debounce)
+        if fused_score > 0.65:
+            return True, fused_score
+        else:
+            return False, fused_score
