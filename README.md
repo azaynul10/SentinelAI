@@ -79,8 +79,13 @@ Open **http://localhost:3000** to see the dashboard.
     *   **Data:** Confidence Score spikes to >90%.
     *   **Replay:** The "Event Log" captures the moment for review.
 
+## 🎥 Demo: ElevenLabs Voice Integration
+> *"I have detected a fall. Don't worry, I am alerting your emergency contact now."*
+
+[**▶️ Watch the Voice Alert in Action**](./fall_detection_voice_demo.mp4)
+
 ## 🏆 Future Roadmap (Hackathon Follow-up)
-*   **ElevenLabs Integration:** Voice alerts calling out to the fallen person ("Are you okay?").
+*   **ElevenLabs Integration:** Voice alerts calling out to the fallen person ("Are you okay?"). (✅ **DONE**)
 *   **Robotics Integration:** Signal a local robot (or Spot) to investigate.
 *   **.cv Domain:** Hosting user health profiles on secure .cv domains.
 
